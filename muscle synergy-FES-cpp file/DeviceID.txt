@@ -1,0 +1,11 @@
+xsensWraper.setDeviceID("00B43008", 0);
+xsensWraper.setDeviceID("00B42707", 1);
+xsensWraper.setDeviceID("00B43037", 2);
+xsensWraper.setDeviceID("00B42B8A", 3);
+xsensWraper.setDeviceID("00B43009", 4);
+xsensWraper.setDeviceID("00B42FED", 5);
+xsensWraper.setDeviceID("00B43026", 6);
+xsensWraper.setDeviceID("00B42AEE", 7);
+xsensWraper.setDeviceID("00B42B8A", 8);
+xsensWraper.setDeviceID("00B42BA4", 9);
+xsensWraper.setDeviceID("00B426BC", 10);

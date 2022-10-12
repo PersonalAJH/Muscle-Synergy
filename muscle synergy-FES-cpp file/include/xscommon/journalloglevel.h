@@ -1,0 +1,83 @@
+/*	WARNING: COPYRIGHT (C) 2018 XSENS TECHNOLOGIES OR SUBSIDIARIES WORLDWIDE. ALL RIGHTS RESERVED.
+	THIS FILE AND THE SOURCE CODE IT CONTAINS (AND/OR THE BINARY CODE FILES FOUND IN THE SAME
+	FOLDER THAT CONTAINS THIS FILE) AND ALL RELATED SOFTWARE (COLLECTIVELY, "CODE") ARE SUBJECT
+	TO A RESTRICTED LICENSE AGREEMENT ("AGREEMENT") BETWEEN XSENS AS LICENSOR AND THE AUTHORIZED
+	LICENSEE UNDER THE AGREEMENT. THE CODE MUST BE USED SOLELY WITH XSENS PRODUCTS INCORPORATED
+	INTO LICENSEE PRODUCTS IN ACCORDANCE WITH THE AGREEMENT. ANY USE, MODIFICATION, COPYING OR
+	DISTRIBUTION OF THE CODE IS STRICTLY PROHIBITED UNLESS EXPRESSLY AUTHORIZED BY THE AGREEMENT.
+	IF YOU ARE NOT AN AUTHORIZED USER OF THE CODE IN ACCORDANCE WITH THE AGREEMENT, YOU MUST STOP
+	USING OR VIEWING THE CODE NOW, REMOVE ANY COPIES OF THE CODE FROM YOUR COMPUTER AND NOTIFY
+	XSENS IMMEDIATELY BY EMAIL TO INFO@XSENS.COM. ANY COPIES OR DERIVATIVES OF THE CODE (IN WHOLE
+	OR IN PART) IN SOURCE CODE FORM THAT ARE PERMITTED BY THE AGREEMENT MUST RETAIN THE ABOVE
+	COPYRIGHT NOTICE AND THIS PARAGRAPH IN ITS ENTIRETY, AS REQUIRED BY THE AGREEMENT.
+*/
+
+#ifndef JOURNALLOGLEVEL_H
+#define JOURNALLOGLEVEL_H
+
+#ifdef ANDROID
+	#include <android/log.h>
+
+	#define JLL_TRACE	ANDROID_LOG_VERBOSE
+	#define JLL_DEBUG	ANDROID_LOG_DEBUG
+	#define JLL_ALERT	ANDROID_LOG_WARN
+	#define JLL_ERROR	ANDROID_LOG_ERROR
+	#define JLL_FATAL	ANDROID_LOG_FATAL
+	#define JLL_NONE	ANDROID_LOG_SILENT
+#else
+	#define JLL_TRACE	0
+	#define JLL_DEBUG	1
+	#define JLL_ALERT	2
+	#define JLL_ERROR	3
+	#define JLL_FATAL	4
+	#define JLL_NONE	5
+#endif
+
+enum JournalLogLevel {
+	  JLL_Trace = JLL_TRACE		//!< log all messages, including function entry/exit
+	, JLL_Debug = JLL_DEBUG		//!< log all messages, except function entry/exit (trace)
+	, JLL_Alert = JLL_ALERT		//!< only log fatal, error and alert messages
+	, JLL_Error = JLL_ERROR		//!< only log fatal and error messages
+	, JLL_Fatal = JLL_FATAL		//!< only log fatal messages
+	, JLL_None  = JLL_NONE		//!< don't log any messages
+};
+
+#ifdef XSENS_DEBUG
+	#ifndef XSENS_RELEASE
+		// full debug
+		#ifndef JLDEF_BUILD
+			#define JLDEF_BUILD		JLL_DEBUG	// 'trace' needs to be enabled explicitly since it potentially has a huge impact on performance
+		#endif
+		#ifndef JLDEF_FILE
+			#define JLDEF_FILE		JLL_Debug
+		#endif
+		#ifndef JLDEF_DEBUGGER
+			#define JLDEF_DEBUGGER	JLL_Alert
+		#endif
+	#else
+		// Release With Debug Info (non-optimized Release build)
+		#ifndef JLDEF_BUILD
+			#define JLDEF_BUILD		JLL_DEBUG
+		#endif
+		#ifndef JLDEF_FILE
+			#define JLDEF_FILE		JLL_Debug
+		#endif
+		#ifndef JLDEF_DEBUGGER
+			#define JLDEF_DEBUGGER	JLL_Error
+		#endif
+	#endif
+#else
+	// Full optimized Release build, logging should be reduced to a minimum
+	#ifndef JLDEF_BUILD
+		#define JLDEF_BUILD		JLL_ALERT
+	#endif
+	#ifndef JLDEF_FILE
+		#define JLDEF_FILE		JLL_Alert
+	#endif
+	#ifndef JLDEF_DEBUGGER
+		#define JLDEF_DEBUGGER	JLL_Fatal
+	#endif
+	#define JLNOLINEINFO
+#endif
+
+#endif
