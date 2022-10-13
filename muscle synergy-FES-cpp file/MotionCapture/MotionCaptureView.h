@@ -1,5 +1,5 @@
 
-// MotionCaptureView.h : CMotionCaptureView Å¬·¡½ºÀÇ ÀÎÅÍÆäÀÌ½º
+// MotionCaptureView.h : CMotionCaptureView Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½
 //
 
 #pragma once
@@ -10,28 +10,30 @@
 #include "FES\smpt_client.h"
 #include "FES\smpt_messages.h"
 #include "FES\smpt_packet_number_generator.h"
+#include<vector>
+
 #pragma comment (lib, "libsmpt.lib")
 
-// Mid_level stimulation : pulse frequency »ý¼º
+// Mid_level stimulation : pulse frequency ï¿½ï¿½ï¿½ï¿½
 #include "FES\smpt_ml_client.h"
 
-class CMotionCaptureView : public CView
+class CMotionCaptureView : public CView1
 {
-protected: // serialization¿¡¼­¸¸ ¸¸µé¾îÁý´Ï´Ù.
+protected: // serializationï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
 	CMotionCaptureView();
 	DECLARE_DYNCREATE(CMotionCaptureView)
 
-// Æ¯¼ºÀÔ´Ï´Ù.
+// Æ¯ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 public:
 	CMotionCaptureDoc* GetDocument() const;
-	virtual void OnDraw(CDC* pDC);  // ÀÌ ºä¸¦ ±×¸®±â À§ÇØ ÀçÁ¤ÀÇµÇ¾ú½À´Ï´Ù.
+	virtual void OnDraw(CDC* pDC);  // ï¿½ï¿½ ï¿½ä¸¦ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ÇµÇ¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
 
-// ±¸ÇöÀÔ´Ï´Ù.
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 public:
 	virtual ~CMotionCaptureView();
 #ifdef _DEBUG
@@ -60,7 +62,7 @@ protected:
 	void fill_ml_update(Smpt_device * const device, Smpt_ml_update *const ml_update, const char *port_name);
 	void fill_ml_get_current_data(Smpt_device * const device, Smpt_ml_get_current_data *const ml_get_current_data);
 
-	// ÅëÁõÀÌ ¿À´Â Àü·ùÀÇ Å©±â Ã£±â
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ Ã£ï¿½ï¿½
 	void find_current_stimulation(const char *port_name);
 	bool currentSwitch[8];
 	float currentAmp[8];
@@ -69,15 +71,16 @@ protected:
 	float currentPWTemp[8];
 	int portBias;
 	int channelNum = 0;
-	const char *port_name[2];	// FES usb Æ÷Æ® ¹øÈ£
+	const char *port_name[2];	// FES usb ï¿½ï¿½Æ® ï¿½ï¿½È£
 	FILE* AmpData;
 
 protected:
-	FILE* f;
-	FILE* ff;
-	FILE* fff;
-	FILE* ffff;
+	FILE* FILE_R_ang;
+	FILE* FILE_L_ang;
+	FILE* FILE_R_angvel;
+	FILE* FILE_L_angvel;
 	
+
 	FILE* LegData;
 	bool logCheck = false;
 	bool simulCheck = false;
@@ -88,7 +91,7 @@ protected:
 	Vec3f sensorAngularVel[2];
 
 
-	//Á¤È¯
+	//ï¿½ï¿½È¯
 	Vec3f R_Angle;
 	Vec3f L_Angle;
 	Vec3f R_Ave[3];
@@ -114,6 +117,7 @@ protected:
 	int Zeronum(float state[200]);
 
 	int windownum;
+	vector<int> R_FootAng;
 	float jhtmp_1[20];
 	float jhtmp_2[20];
 	float jhtmp_3[20];
@@ -125,7 +129,7 @@ protected:
 	float back_1;	float back_2;	 float back_3;	 float back_4;
 	float mid_1;	float mid_2;	 float mid_3;	 float mid_4;
 	int tmp;
-	float OneCycle[5][200];  //30ms ¿¡ ÇÑ¹ø º¸Çà ÇÑ¹ø¿¡ ÃÖ´ë 3ÃÊ 100°³¸¸ÀÖ¾îµµ °¡´É  ¼öÁ¤ ÇÊ¿ä 100°³ÀÇ »çÀÌÅ¬¸¸ ÇÏ´Â°Ô ¾Æ´Ï±â ¶§¹®¿¡ ¿©·¯ ½ÎÀÌÅ¬»óÈ²½Ã
+	float OneCycle[5][200];  //30ms ï¿½ï¿½ ï¿½Ñ¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ 3ï¿½ï¿½ 100ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾îµµ ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ 100ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å¬ï¿½ï¿½ ï¿½Ï´Â°ï¿½ ï¿½Æ´Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å¬ï¿½ï¿½È²ï¿½ï¿½
 	int Cyclenum;
 	int Cyclenum_2;
 	float OneCycle_2[200];
@@ -162,7 +166,7 @@ protected:
 	bool MODE;
 	bool START;
 
-	//windowÅ©±â
+	//windowÅ©ï¿½ï¿½
 	int m_WindowHeight;
 	int m_WindowWidth;
 
@@ -179,7 +183,7 @@ protected:
 	int limb = 0;
 	
 
-// »ý¼ºµÈ ¸Þ½ÃÁö ¸Ê ÇÔ¼ö
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ô¼ï¿½
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
@@ -195,7 +199,7 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
 
-#ifndef _DEBUG  // MotionCaptureView.cppÀÇ µð¹ö±× ¹öÀü
+#ifndef _DEBUG  // MotionCaptureView.cppï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 inline CMotionCaptureDoc* CMotionCaptureView::GetDocument() const
    { return reinterpret_cast<CMotionCaptureDoc*>(m_pDocument); }
 #endif
