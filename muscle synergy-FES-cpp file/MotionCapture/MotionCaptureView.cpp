@@ -157,21 +157,8 @@ void CMotionCaptureView::OnInitialUpdate()
    SetTimer(1, 10, NULL);
    InitGL();
 
-   // Xsens 센서 총 11개
-   //xsensWraper.setDeviceID("00B43008", 0);
-   //xsensWraper.setDeviceID("00B42707", 1);
-//    xsensWraper.setDeviceID("00B43037", 0);         //R 다리
-   //xsensWraper.setDeviceID("00B42B8A", 3);
-   //xsensWraper.setDeviceID("00B43009", 1);         // L 다리   
-   //xsensWraper.setDeviceID("00B42FED", 5);
-   //xsensWraper.setDeviceID("00B43026", 6);
-   //xsensWraper.setDeviceID("00B42AEE", 7);
-   //xsensWraper.setDeviceID("00B42B8A", 8);
-   //xsensWraper.setDeviceID("00B42BA4", 9);
-   //xsensWraper.setDeviceID("00B426BC", 10);
 
    // 사용할 센서, 번호는 0번부터 지정
-
 
    xsensWraper.setDeviceID("00B42FED", 0);
    xsensWraper.setDeviceID("00B43026", 1);
@@ -207,23 +194,16 @@ void CMotionCaptureView::OnTimer(UINT_PTR nIDEvent)
 
    xsensWraper.runXsens();
 
-   //for (int i = 0; i < 2; i++)
-   //{
-   //   sensorAngle[i] = xsensWraper.getAngle(i);
-   //   sensorAngularVel[i] = xsensWraper.getGyro(i);
-   //}
-   
-
    R_Angle = -xsensWraper.getjhAngle(0);
    L_Angle = -xsensWraper.getjhAngle(1);
    
 
 
 
-   R_MoCapAngle[0] = -xsensWraper.getAngle(0);      //진규
-   L_MoCapAngle[0] = -xsensWraper.getAngle(1);      //진규
-   //R_MoCapAngle[1] = xsensWraper.getAngle(2);      //진규
-   //L_MoCapAngle[1] = xsensWraper.getAngle(3);      //진규
+   R_MoCapAngle[0] = -xsensWraper.getAngle(0);    
+   L_MoCapAngle[0] = -xsensWraper.getAngle(1);     
+   //R_MoCapAngle[1] = xsensWraper.getAngle(2);  
+   //L_MoCapAngle[1] = xsensWraper.getAngle(3);   
    //R_AngularVelocity = -xsensWraper.getAng(0);
    //L_AngularVelocity = -xsensWraper.getAng(1);
    R_AngularVelocity = -xsensWraper.getGyro(0);
@@ -238,10 +218,6 @@ void CMotionCaptureView::OnTimer(UINT_PTR nIDEvent)
    m_Human.updateJointAngle(3, L_MoCapAngle[0], L_MoCapAngle[0], L_MoCapAngle[0]);
 
 
-
-   
-
-   
    State();
    tmp++;
    Cyclenum_2 = Cyclenum % 5;
@@ -825,8 +801,6 @@ void CMotionCaptureView::State() {
    mid_1 = windownum * R_FootAng.at(19 - windownum);
 
 
-
-
    if (tmp < av_L_EC) {
       jhstatenum = 1;
    }
@@ -844,10 +818,6 @@ void CMotionCaptureView::State() {
    }
    else
       jhstatenum = 6;
-   
-
-
-
 }
 
 int   CMotionCaptureView::Max(float state[]) {
@@ -879,8 +849,6 @@ int    CMotionCaptureView::Min(float state[]) {
 }
 
 void CMotionCaptureView::update() {
-
-
    R_AngleCycle[Cyclenum_2][tmp] = R_Anglesag;
    L_AngleCycle[Cyclenum_2][tmp] = L_Anglesag;
    R_AngularvelocityCycle[Cyclenum_2][tmp] = R_AngularVelocitysag;
