@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "RCArmUnit.h"
+#include "CRArmUnit.h"
 
 
 CLimbUnit::CLimbUnit()
@@ -102,26 +102,6 @@ void CLimbUnit::rotateMat(int idx, Mat3x3f rot)
 	m_ArmUnit[idx].rotateC(rot);
 }
 
-// Mat3x3f CLimbUnit::calcMat(Vec3f angle, int dir) {
-// 	float a = angle[2] * PI / 180;
-// 	float b = angle[1] * PI / 180;
-// 	float c = angle[0] * PI / 180;
-// 	Vec3f r1;
-// 	Vec3f r2;
-// 	Vec3f r3;
-// 	if (dir == 1) { // ZYX ȸ��
-// 		r1 = Vec3f(cos(a)*cos(b), cos(a)*sin(b)*sin(c) - sin(a)*cos(c), cos(a)*sin(b)*cos(c) + sin(a)*sin(c));
-// 		r2 = Vec3f(sin(a)*cos(b), sin(a)*sin(b)*sin(c) + cos(a)*cos(c), sin(a)*sin(b)*cos(c) - cos(a)*sin(c));
-// 		r3 = Vec3f(-sin(b), cos(b)*sin(c), cos(b)*cos(c));
-// 	}
-// 	else {			// XYZ ȸ��
-// 		r1 = Vec3f(cos(a)*cos(b), -sin(a)*cos(b), sin(b));
-// 		r2 = Vec3f( cos(a)*sin(b)*sin(c) + sin(a)*cos(c), -sin(a)*sin(b)*sin(c) + cos(a)*cos(c), -cos(b)*sin(c));
-// 		r3 = Vec3f(-cos(a)*sin(b)*cos(c) + sin(a)*sin(c),  sin(a)*sin(b)*cos(c) + cos(a)*sin(c),  cos(b)*cos(c));
-// 	}
-
-// 	return Mat3x3f(r1, r2, r3);
-// }
 
 void CLimbUnit::calcEnd(Vec3f hand, Vec3f lower, Vec3f upper)
 {
@@ -171,18 +151,7 @@ void CLimbUnit::calcInv(Vec3f wri2, Vec3f ang_elb)
 	updateJointAngle_IK2(ang_elb, ang_elb, invAngle);
 }
 
-Vec3f CLimbUnit::calcCross(Vec3f v1, Vec3f v2)
-{
-	Vec3f v3 = Vec3f(v1[1] * v2[2] - v1[2] * v2[1], 
-					 v1[2] * v2[0] - v1[0] * v2[2], 
-					 v1[0] * v2[1] - v1[1] * v2[0]);
-	return v3;
-}
 
-float CLimbUnit::calcNorm(Vec3f v1)
-{	
-	return sqrt(v1[0] * v1[0] + v1[1] * v1[1] + v1[2] * v1[2]);
-}
 
 void CLimbUnit::updateJointAngle(Vec3f hand, Vec3f low, Vec3f up)
 {

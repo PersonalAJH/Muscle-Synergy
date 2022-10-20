@@ -18,6 +18,13 @@ public:
 	void calcPosition(int partsIdx, Vec3f hand, Vec3f lower, Vec3f upper);
 	Vec3f getInvAngle(int partsIdx, int jointIdx);
 	Mat3x3f calcMat(Vec3f angle, int dir);
+	Vec3f calcCross(Vec3f v1, Vec3f v2);
+	float calcNorm(Vec3f v1);
+	float clamp(float f1, float lowLimit, float highLimit);
+	Mat3x3f getRollMat(float v1);
+	Mat3x3f getPitchMat(float v1);
+	Mat3x3f getYawMat(float v1);
+	
 
 private:
 	CLimbUnit m_Limb[4];

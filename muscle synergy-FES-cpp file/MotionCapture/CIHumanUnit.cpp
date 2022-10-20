@@ -40,8 +40,86 @@ Mat3x3f CIHumanUnit::calcMat(Vec3f angle, int dir) {
 	return Mat3x3f(r1, r2, r3);
 }
 
+Vec3f CIHumanUnit::calcCross(Vec3f v1, Vec3f v2)
+{
+	Vec3f v3 = Vec3f(v1[1] * v2[2] - v1[2] * v2[1], 
+					 v1[2] * v2[0] - v1[0] * v2[2], 
+					 v1[0] * v2[1] - v1[1] * v2[0]);
+	return v3;
+}
+
+float CIHumanUnit::calcNorm(Vec3f v1)
+{	
+	return sqrt(v1[0] * v1[0] + v1[1] * v1[1] + v1[2] * v1[2]);
+}
 
 
+float CIHumanUnit::clamp(float f1, float lowLimit, float highLimit)
+{
+	float result;
+	if (lowLimit > highLimit) {
+		float tmp = highLimit;
+		highLimit = lowLimit;
+		lowLimit = tmp;
+	}
+
+	if (result < lowLimit) {
+		result = lowLimit;
+	}
+
+	if (result > highLimit) {
+		result = highLimit;
+	}
+
+	return result;
+}
+
+
+Mat3x3f CIHumanUnit::getRollMat(float v1)
+{
+	Mat3x3f result;
+	float v1_sin, v1_cos;
+	v1_sin = sin(v1);
+	v1_cos = cos(v1);
+	Vec3f r1,r2,r3;
+	
+	r1 = Vec3f(v1_cos, -v1_sin,0.0f);
+	r2 = Vec3f(v1_sin, v1_cos, 0.0f);
+	r3 = Vec3f(0.0f, 0.0f,1.0f);
+	
+	result = Mat3x3f(r1,r2,r3);
+	return result;
+}
+
+Mat3x3f CIHumanUnit::getPitchMat(float v1)
+{
+	Mat3x3f result;
+	float v1_sin, v1_cos;
+	v1_sin = sin(v1);
+	v1_cos = cos(v1);
+	Vec3f r1,r2,r3;
+	r1 = Vec3f(v1_cos, 0.0f, v1_sin);
+	r2 = Vec3f(0.0f, 1.0f, 0.0f);
+	r3 = Vec3f(-v1_sin, 0.0f, v1_cos);
+	
+	result = Mat3x3f(r1,r2,r3);
+	return result;
+}
+
+Mat3x3f CIHumanUnit::getYawMat(float v1)
+{
+	Mat3x3f result;
+	float v1_sin, v1_cos;
+	v1_sin = sin(v1);
+	v1_cos = cos(v1);
+	Vec3f r1,r2,r3;
+	r1 = Vec3f(1.0f, 0.0f,0.0f);
+	r2 = Vec3f(0.0f, v1_cos, -v1_sin);
+	r3 = Vec3f(0.0f, v1_sin, v1_cos);
+	
+	result = Mat3x3f(r1,r2,r3);
+	return result;
+}
 
 
 

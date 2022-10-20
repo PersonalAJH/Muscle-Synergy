@@ -33,7 +33,6 @@ public:
 	Vec3f calcCross(Vec3f v1, Vec3f v2);
 	float calcNorm(Vec3f v1);
 	
-	// Mat3x3f calcMat(Vec3f angle, int dir);
 
 	Vec3f getPosition(int jointIdx, int FK);
 	Vec3f getTheta4();
