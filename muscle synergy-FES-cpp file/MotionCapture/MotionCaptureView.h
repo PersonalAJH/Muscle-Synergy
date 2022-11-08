@@ -118,10 +118,6 @@ protected:
 
 	int windownum;
 	vector<int> R_FootAng;
-	float jhtmp_1[20];
-	float jhtmp_2[20];
-	float jhtmp_3[20];
-	float jhtmp_4[20];
 
 	float statenumTemp;
 	float jhstatenum;
@@ -132,7 +128,6 @@ protected:
 	float OneCycle[5][200];  //30ms �� �ѹ� ���� �ѹ��� �ִ� 3�� 100�����־ ����  ���� �ʿ� 100���� ����Ŭ�� �ϴ°� �ƴϱ� ������ ���� ����Ŭ��Ȳ��
 	int Cyclenum;
 	int Cyclenum_2;
-	float OneCycle_2[200];
 
 	float R_AngleCycle[5][200];
 	float L_AngleCycle[5][200];
